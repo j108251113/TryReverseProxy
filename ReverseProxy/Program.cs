@@ -12,22 +12,27 @@ builder.Configuration
 // 原始碼出處：https://blog.darkthread.net/blog/yarp-lab/
 builder.Services.AddReverseProxy()
     .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"))
-    .AddTransforms(context => {
-        context.AddResponseTransform(async respCtx => {
+    .AddTransforms(context =>
+    {
+        context.AddResponseTransform(async respCtx =>
+        {
             var resp = respCtx.HttpContext.Response;
             var req = respCtx.HttpContext.Request;
             var srcResp = respCtx.ProxyResponse;
-            if ((srcResp?.Content.Headers.ContentType?.MediaType ?? string.Empty).Contains("html")) {
+            if ((srcResp?.Content.Headers.ContentType?.MediaType ?? string.Empty).Contains("html"))
+            {
                 var stream = await srcResp?.Content.ReadAsStreamAsync()!;
                 // Decompress the response stream if needed
-                if (srcResp.Content.Headers.ContentEncoding.Any()) {
+                if (srcResp.Content.Headers.ContentEncoding.Any())
+                {
                     resp.Headers.Remove("Content-Encoding");
                     stream = new GZipStream(stream, CompressionMode.Decompress);
                 }
                 using var reader = new StreamReader(stream);
                 // TODO: size limits, timeouts
                 var body = await reader.ReadToEndAsync();
-                if (!string.IsNullOrEmpty(body)) {
+                if (!string.IsNullOrEmpty(body))
+                {
                     respCtx.SuppressResponseBody = true;
                     // 停用廣告相關 JavaScript
                     body = body.Replace("src=\"//pagead2", "_=\"");
@@ -48,18 +53,34 @@ document.querySelectorAll('.axslot').forEach(o => o.remove());
             }
         });
     });
+
 var app = builder.Build();
+
+app.UseCors(builder =>
+{
+    builder.WithOrigins("http://localhost:7266");
+});
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Append("Content-Security-Policy", "frame-ancestors 'self' https://localhost:7266");
+    await next();
+});
+
 // 原始碼出處：https://blog.darkthread.net/blog/yarp-lab/
 // 處理圖床照片下載
-app.MapGet("/imgbed-{hostName}/{**path}", async (HttpContext ctx, string hostName, string path) => {
+app.MapGet("/imgbed-{hostName}/{**path}", async (HttpContext ctx, string hostName, string path) =>
+{
     var url = $"https://{hostName}.read01.com/{path}";
     var client = new HttpClient();
     var resp = await client.GetAsync(url);
-    if (resp.IsSuccessStatusCode) {
+    if (resp.IsSuccessStatusCode)
+    {
         var contentType = resp.Content.Headers.ContentType!.ToString();
         ctx.Response.ContentType = contentType;
         await resp.Content.CopyToAsync(ctx.Response.Body);
-    } else {
+    }
+    else
+    {
         ctx.Response.StatusCode = (int)resp.StatusCode;
     }
 });
