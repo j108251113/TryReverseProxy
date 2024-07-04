@@ -4,10 +4,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TryReverseProxy", "TryReverseProxy\TryReverseProxy.csproj", "{7960A4FA-FB4C-48A5-99F1-B8CEDA5773C4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BA5D8C83-89BA-4AAC-9F48-049DED9C7B5C} = {BA5D8C83-89BA-4AAC-9F48-049DED9C7B5C}
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryReverseProxy.AppHost", "TryReverseProxy.AppHost\TryReverseProxy.AppHost.csproj", "{B6C80F5F-299E-46B8-B084-00885CE50E83}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TryReverseProxy.AppHost", "TryReverseProxy.AppHost\TryReverseProxy.AppHost.csproj", "{B6C80F5F-299E-46B8-B084-00885CE50E83}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TryReverseProxy.ServiceDefaults", "TryReverseProxy.ServiceDefaults\TryReverseProxy.ServiceDefaults.csproj", "{C4515B28-8591-4EB4-9748-0F65E7C9EE73}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ReverseProxy", "ReverseProxy\ReverseProxy.csproj", "{BA5D8C83-89BA-4AAC-9F48-049DED9C7B5C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +32,10 @@ Global
 		{C4515B28-8591-4EB4-9748-0F65E7C9EE73}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4515B28-8591-4EB4-9748-0F65E7C9EE73}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4515B28-8591-4EB4-9748-0F65E7C9EE73}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA5D8C83-89BA-4AAC-9F48-049DED9C7B5C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA5D8C83-89BA-4AAC-9F48-049DED9C7B5C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA5D8C83-89BA-4AAC-9F48-049DED9C7B5C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA5D8C83-89BA-4AAC-9F48-049DED9C7B5C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
